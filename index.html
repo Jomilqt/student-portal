@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EduManage System</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><img src="ua1.png" alt="Logo" style="height: 3em; margin-right: 40x; vertical-align: middle;">Student Portal</h1>
+      
+      <!-- User Info Section -->
+      <div class="user-info" id="userInfo">
+        <span id="loggedInUser">Not logged in</span>
+        <button onclick="logout()" id="logoutBtn">Log Out</button>
+      </div>
+      
+      <nav id="mainNav" style="display: none;">
+        <button class="tab-btn" data-tab="enrollment">Enrollment</button>
+        <button class="tab-btn" data-tab="grades">Grade Management</button>
+        <button class="tab-btn" data-tab="attendance">Attendance</button>
+        <button class="tab-btn" data-tab="reports">Reports</button>
+        <button class="tab-btn" data-tab="manageUsers">Manage Users</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Authentication Tabs -->
+      <div id="authTabs">
+        <div class="auth-nav">
+          <button class="auth-tab-btn active" data-auth-tab="login">Log In</button>
+          <button class="auth-tab-btn" data-auth-tab="signup">Sign Up</button>
+        </div>
+
+        <!-- Login Section -->
+        <section id="login" class="auth-content active">
+          <h2>Log In Here</h2>
+          <form id="login-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter username" required />
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password" required />
+            <button type="submit">Log In</button>
+          </form>
+        </section>
+
+        <!-- Sign Up Section -->
+        <section id="signup" class="auth-content">
+          <h2>Create Account</h2>
+          <form id="signup-form">
+            <label for="signup-username">Username</label>
+            <input type="text" id="signup-username" placeholder="Choose username" required />
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" placeholder="Enter email" required />
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" placeholder="Create password" required />
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" placeholder="Confirm password" required />
+            <label for="user-role">Role</label>
+            <select id="user-role" required>
+              <option value="">Select role</option>
+              <option value="admin">Administrator</option>
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+            </select>
+            <button type="submit">Sign Up</button>
+          </form>
+        </section>
+      </div>
+
+      <!-- Main Application (hidden until login) -->
+      <div id="mainApp" style="display: none;">
+        <!-- Enrollment Module -->
+        <section id="enrollment" class="tab-content active">
+          <h2>Enrollment Module</h2>
+          <div class="enrollment-container">
+            <div class="form-section">
+              <h3>Enroll New Student</h3>
+              <form id="enrollment-form">
+                <label for="student-name">Student Name</label>
+                <input type="text" id="student-name" placeholder="Full name" required />
+                <label for="student-id">Student ID</label>
+                <input type="text" id="student-id" placeholder="ID number" required />
+                <label for="student-email">Email</label>
+                <input type="email" id="student-email" placeholder="Email address" required />
+                <label for="course">Course</label>
+                <select id="course" required>
+                  <option value="">Select course</option>
+                  <option value="DCAT">CAFFS</option>
+                  <option value="DHRT">BSCS</option>
+                  <option value="DICT">CTE</option>
+                  <option value="BSIS">CCS</option>
+                </select>
+                <label for="enrollment-date">Enrollment Date</label>
+                <input type="date" id="enrollment-date" required />
+                <label for="student-profile-pic">Profile Picture</label>
+                <input type="file" id="student-profile-pic" accept="image/*" />
+                <button type="submit">Enroll Student</button>
+              </form>
+            </div>
+
+            <div class="students-list-section">
+              <h3>Enrolled Students</h3>
+              <div class="students-list" id="studentsList">
+                <div class="no-students">No students enrolled yet</div>
+              </div>
+            </div>
+          </div>
+        </section><section id="manageUsers" class="tab-content">
+  <h2>Manage Registered Users</h2>
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- User rows will be dynamically generated here -->
+    </tbody>
+  </table>
+</section>
+
+        <!-- Grade Management -->
+        <section id="grades" class="tab-content">
+          <h2>Grade Management</h2>
+          <form id="grade-form">
+            <label for="grade-student-id">Student ID</label>
+            <input type="text" id="grade-student-id" placeholder="ID number" required />
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="Subject name" required />
+            <label for="grade">Grade</label>
+            <input type="text" id="grade" placeholder="Grade (A-F)" required />
+            <label for="semester">Semester</label>
+            <select id="semester" required>
+              <option value="">Select semester</option>
+              <option value="1st Semester">1st Semester</option>
+              <option value="2nd Semester">2nd Semester</option>
+            </select>
+            <button type="submit">Add Grade</button>
+          </form>
+        </section>
+
+        <!-- Attendance Tracking -->
+        <section id="attendance" class="tab-content">
+          <h2>Attendance Tracking</h2>
+          <form id="attendance-form">
+            <label for="att-student-id">Student ID</label>
+            <input type="text" id="att-student-id" placeholder="ID number" required />
+            <label for="date">Date</label>
+            <input type="date" id="date" required />
+            <label for="status">Status</label>
+            <select id="status" required>
+              <option value="">Select status</option>
+              <option value="Present">Present</option>
+              <option value="Absent">Absent</option>
+              <option value="Late">Late</option>
+              <option value="Excused">Excused</option>
+            </select>
+            <label for="attendance-notes">Notes</label>
+            <textarea id="attendance-notes" placeholder="Additional notes..." rows="3"></textarea>
+            <button type="submit">Record Attendance</button>
+          </form>
+        </section>
+        
+
+        <!-- Reports Generation -->
+        <section id="reports" class="tab-content">
+          <h2>Reports Generation</h2>
+          <div class="reports-container">
+            <div class="report-options">
+              <button onclick="generateReport('students')" class="report-btn">Student List</button>
+              <button onclick="generateReport('grades')" class="report-btn">Grade Report</button>
+              <button onclick="generateReport('attendance')" class="report-btn">Attendance Report</button>
+              <button onclick="generateReport('enrollment')" class="report-btn">Enrollment Stats</button>
+            </div>
+            <div id="report-output" class="report-output">
+              <p>Select a report type to generate</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
